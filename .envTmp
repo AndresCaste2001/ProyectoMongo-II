@@ -1,0 +1,5 @@
+MONGO_USER="mongo"
+MONGO_PORT="27017"
+MONGO_PWD="CeXnOHZKjKZRhcTeWUuliIxgbMKVHyVD"
+MONGO_HOST="mongodb.railway.internal"
+MONGO_CLUSTER="roundhouse.proxy.rlwy.net"
