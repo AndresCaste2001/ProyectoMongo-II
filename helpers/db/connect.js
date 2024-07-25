@@ -19,8 +19,8 @@ export class connect{
        this.#pass = process.env.MONGO_PWD;
        this.#host = process.env.MONGO_HOST;
        this.#cluster = process.env.MONGO_CLUSTER;
+  
        this.#open();
-       this.db = this.conexion.db(this.getDbName)
        connect.instance = this;
        return this;
    }
@@ -33,6 +33,7 @@ export class connect{
    set setCluster(cluster){
        this.#cluster = cluster
    }
+
    get getPass(){
        return this.#pass
    }
