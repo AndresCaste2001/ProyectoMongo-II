@@ -6,7 +6,7 @@ export class connect{
     #pass;
     #host;
     #cluster;
-
+    #dbName;
 
    static instance
    constructor()
@@ -19,30 +19,47 @@ export class connect{
        this.#pass = process.env.MONGO_PWD;
        this.#host = process.env.MONGO_HOST;
        this.#cluster = process.env.MONGO_CLUSTER;
-  
+       this.setDbName = process.env.MONGO_DB;
        this.#open();
+       this.db = this.conexion.db(this.getDbName)
        connect.instance = this;
        return this;
    }
    set setPass(pass){
-       this.#pass = pass
-   }
-   set setHost(host){
-       this.#host = host
-   }
-   set setCluster(cluster){
-       this.#cluster = cluster
-   }
+    this.#pass = pass;
+}
 
-   get getPass(){
-       return this.#pass
-   }
-   get getHost(){
-       return this.#host
-   }
-   get getCluster(){
-       return this.#cluster
-   }
+set setHost(host){
+    this.#host = host;
+}
+
+set setCluster(cluster){
+    this.#cluster = cluster;
+}
+
+set setDbName(dbName){
+    this.#dbName = dbName;
+}
+
+get getPass(){
+    return this.#pass
+}
+
+get getHost(){
+    return this.#host
+}
+
+get getCluster(){
+    return this.#cluster
+}
+
+get getDbName(){
+    return this.#dbName
+}
+
+async reconnect(){
+    await this.#open();
+}
 
    async #open(){
        this.conexion = new MongoClient(`${this.getHost}${this.user}:${this.getPass}@${this.getCluster}:${this.port}/`);
