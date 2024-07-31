@@ -145,11 +145,74 @@ db.pelicula.findOne(
    - Descuentos y Tarjetas VIP:
 
    - **API para Aplicar Descuentos:** Permitir la aplicación de descuentos en la compra de boletos para usuarios con tarjeta VIP.
+
    - **API para Verificar Tarjeta VIP:** Permitir la verificación de la validez de una tarjeta VIP durante el proceso de compra.
 
-3. Roles Definidos:**Administrador:** Tiene permisos completos para gestionar el sistema, incluyendo la venta de boletos en el lugar físico. Los administradores no están involucrados en las compras en línea realizadas por los usuarios.**Usuario Estándar:** Puede comprar boletos en línea sin la intervención del administrador.**Usuario VIP:** Puede comprar boletos en línea con descuentos aplicables para titulares de tarjetas VIP.**API para Crear Usuario:** Permitir la creación de nuevos usuarios en el sistema, asignando roles y privilegios específicos (usuario estándar, usuario VIP o administrador).**API para Obtener Detalles de Usuario:** Permitir la consulta de información detallada sobre un usuario, incluyendo su rol y estado de tarjeta VIP.**API para Actualizar Rol de Usuario:** Permitir la actualización del rol de un usuario (por ejemplo, cambiar de usuario estándar a VIP, o viceversa).**API para Listar Usuarios:** Permitir la consulta de todos los usuarios del sistema, con la posibilidad de filtrar por rol (VIP, estándar o administrador).
+     ```javascript
+      let vip = await this.collection.aggregate(
+                 [
+                     {
+                       $match: {
+                         status: "activo"
+                       }
+                     },
+                     {
+                       $lookup: {
+                         from: "cliente",
+                         localField: "id_cliente",
+                         foreignField: "_id",
+                         as: "cliente_info"
+                       }
+                     },
+                     {
+                       $unwind: "$cliente_info"
+                     },
+                     {
+                       $project: {
+                         _id: 0,
+                         cliente: "$cliente_info"
+                       }
+                     }
+                   ]
+             )
+     ```
 
-4. Compras en Línea:
+     
+
+3. Roles Definidos:**Administrador:** Tiene permisos completos para gestionar el sistema, incluyendo la venta de boletos en el lugar físico. Los administradores no están involucrados en las compras en línea realizadas por los usuarios.**Usuario Estándar:** Puede comprar boletos en línea sin la intervención del administrador.**Usuario VIP:** Puede comprar boletos en línea con descuentos aplicables para titulares de tarjetas VIP.**API para Crear Usuario:**
+
+   ```javascript
+   async createUser() {
+           let users  = await this.collection.insertOne(
+               {
+                   "tipoCategoria": "Normal",
+                   "nombre": "Camila",
+                   "apellido": "Uganda",
+                   "email": "Camila.arias@example.com",
+                   "telefono": 3051584368
+                 }
+           )
+           return users
+       }
+   ```
+
+    Permitir la creación de nuevos usuarios en el sistema, asignando roles y privilegios específicos (usuario estándar, usuario VIP o administrador).**API para Obtener Detalles de Usuario:** 
+
+   ```javascript
+   detailsUser("66a9cf27bf588d10e961be5c")
+   ```
+
+   Permitir la consulta de información detallada sobre un usuario, incluyendo su rol y estado de tarjeta VIP.**API para Actualizar Rol de Usuario:** Permitir la actualización del rol de un usuario (por ejemplo, cambiar de usuario estándar a VIP, o viceversa).**API para Listar Usuarios:**.
+
+   ```javascript
+   getAllMatch()
+   ```
+
+   
+
+4.  Permitir la consulta de todos los usuarios del sistema, con la posibilidad de filtrar por rol (VIP, estándar o administrador).
+
+5. Compras en Línea:
 
    - **API para Procesar Pagos:** Permitir el procesamiento de pagos en línea para la compra de boletos.
    - **API para Confirmación de Compra:** Enviar confirmación de la compra y los detalles del boleto al usuario.
