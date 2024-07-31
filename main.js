@@ -1,13 +1,7 @@
 
 import { connect } from "./helpers/db/connect.js";
+import { peliculas } from "./js/modules/pelicula.js";
+import { boletas } from "./js/modules/boleta.js";
+let yuo = new boletas()
 
-/***********************************Peliculas**********************************************/
-
- import {
-    Pelicula
-
- } from "./js/modules/pelicula.js"
- 
-let cn = new Pelicula();
-
-console.log(await cn.findBoletas())
+console.log(await yuo.getAllMatch());
