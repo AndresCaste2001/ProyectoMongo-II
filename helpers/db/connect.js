@@ -48,7 +48,7 @@ export class connect {
         return this.#dbName
     }
     async #open () {
-        this.conexion = new MongoClient(`${this.getHost}${this.user}:${this.getPass}@${this.getCluster}:${this.port}`)
+        this.conexion = new MongoClient(`${this.getHost}${this.user}:${this.getPass}@${this.getCluster}:${this.port}/ProyectoMongoII`)
         this.conexion.connect();
     }
     async reconnect(){

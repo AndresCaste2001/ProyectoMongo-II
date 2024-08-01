@@ -19,9 +19,9 @@ host = mongodb://
 cluster = roundhouse.proxy.rlwy.net
 dbName = ProyectoMongoII
 
-user = ClienteInternet
+user = Karen
 port = 57379
-pass = ContrasenaCualquiera
+pass = 12345
 host = mongodb://
 cluster = roundhouse.proxy.rlwy.net
 dbName = ProyectoMongoII

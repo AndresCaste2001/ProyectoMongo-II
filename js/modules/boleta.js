@@ -43,6 +43,20 @@ export class boletas extends connect {
    */
 
     async comprarAsientos(asiento,obj1,obj2,metPago, fila){
+
+
+      const asientoDisponible = await this.collection.findOne({
+          "asiento": asiento,
+          "id_funcion": new ObjectId(obj1),
+          "fila": fila
+      });
+      if (asientoDisponible) {
+        return { error: "El asiento ya está reservado" };
+    }
+
+      
+
+
       const ingresar = await this.collection.insertOne(
         {
           "asiento": asiento,
@@ -120,16 +134,8 @@ export class boletas extends connect {
               ]
         ).toArray();
         
-        let resultados = await res;
-        resultados.forEach(result => {
-            console.log(`ID Función: ${result._id}`);
-            result.asientos_y_filas.forEach(asientoFila => {
-                console.log(`Asiento: ${asientoFila.asiento}, Fila: ${asientoFila.fila}`);
-            });
-            console.log(''); // Adds a blank line for better readability
-        });
+      return res;
 
-    
     }
     
 }

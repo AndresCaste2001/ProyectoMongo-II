@@ -74,4 +74,24 @@ export class cliente extends connect {
         return {nick: nick,
                 pwd: pwd}
     }
-}
+/*
+    async cambiarRol(nickname, nuevoRol) {
+        try {
+            // Actualiza el rol del usuario basado en el nickname
+            const resultado = await this.collection.updateOne(
+                { "user": nickname }, // Filtro para encontrar al usuario por su nickname
+                { $set: { rol: nuevoRol } } // Actualizar el campo 'rol'
+            );
+
+            if (resultado.matchedCount > 0) {
+                console.log(`Rol del usuario con user "${nickname}" cambiado a ${nuevoRol}.`);
+            } else {
+                console.log(`Usuario con user "${nickname}" no encontrado.`);
+            }
+        } catch (error) {
+            console.error('Error al cambiar el rol del usuario:', error);
+        }
+    }*/
+
+    }
+    
