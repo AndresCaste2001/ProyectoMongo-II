@@ -2,6 +2,11 @@
 
 ------
 
+
+
+**Conexion**: mongodb://mongo:CeXnOHZKjKZRhcTeWUuliIxgbMKVHyVD@roundhouse.proxy.rlwy.net:57379
+
+
 **Tiempo de ejecución**: 4 Dias
 
 **Nivel de dificultad:** ★★★★☆
