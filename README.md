@@ -109,7 +109,7 @@ console.log(await ejemplo.getOneMovie("66a9ce97bf588d10e961be56"));
 
    ```javascript
    let ejemplo = new cliente()
-   console.log(await ejemplo.detailsUser("66a9cf27bf588d10e961be5c"));
+   console.log(await ejemplo.crearUsuarioMongo(nick, pwd, categoria));
    ```
 
    Permitir la consulta de información detallada sobre un usuario, incluyendo su rol y estado de tarjeta VIP.**API para Actualizar Rol de Usuario:** Permitir la actualización del rol de un usuario (por ejemplo, cambiar de usuario estándar a VIP, o viceversa).**API para Listar Usuarios:**.
@@ -120,7 +120,7 @@ console.log(await ejemplo.getOneMovie("66a9ce97bf588d10e961be56"));
 
    
 
-4.  Permitir la consulta de todos los usuarios del sistema, con la posibilidad de filtrar por rol (VIP, estándar o administrador).
+4. Permitir la consulta de todos los usuarios del sistema, con la posibilidad de filtrar por rol (VIP, estándar o administrador).
 
 5. Compras en Línea:
 
@@ -201,4 +201,3 @@ Los puntos a evaluar serán los siguientes:
 - 🚨 **Cancelación o Anulación del Proyecto** : No se entregó ningún repositorio, su visualización está oculta (o no compartida con el Trainer) o hubo adulteración después de la fecha y hora establecida para su entrega, ***Evidencia de clonación o conocido como `fork` de algún repositorio, distribución y/o copia de dicho trabajo por cualquier medio de comunicación (verbal, digital, entre otras), se asumirá como cancelación del proyecto de manera definitiva.*** 🚨
 - **25 puntos**: Se creó el repositorio, pero en su rama principal no se encuentra el proyecto general ,al igual que algún archivo en relación al proyecto.
 - **100 puntos**: Se creó exitosamente el repositorio, donde en su rama principal se encuentra el proyecto general y sus archivos en relación a ello, con evidencia de la participación del equipo completo de manera periódica.
-
