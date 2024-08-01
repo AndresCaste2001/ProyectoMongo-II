@@ -31,14 +31,14 @@ export class cliente extends connect {
         ).toArray()
         return users
     }
-    async createUser() {
+    async createUser(tipoCategoria,nombre,apellido,email,telefono) {
         let users  = await this.collection.insertOne(
             {
-                "tipoCategoria": "Normal",
-                "nombre": "Camila",
-                "apellido": "Uganda",
-                "email": "Camila.arias@example.com",
-                "telefono": 3051584368
+                "tipoCategoria": tipoCategoria,
+                "nombre": nombre,
+                "apellido": apellido,
+                "email": email,
+                "telefono": telefono
               }
         )
         return users

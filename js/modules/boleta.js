@@ -43,15 +43,18 @@ export class boletas extends connect {
    */
 
     async comprarAsientos(asiento,obj1,obj2,metPago, fila){
-      const ingresar = await this.collectioninsertOne(
+      const ingresar = await this.collection.insertOne(
         {
           "asiento": asiento,
-          "id_funcion": ObjectId(obj1),
-          "id_cliente": ObjectId(obj2),
+          "id_funcion": new ObjectId(obj1),
+          "id_cliente": new ObjectId(obj2),
           "metodoPago": metPago,
           "fila": fila
       }
       )
+      if(ingresar.acknowledged === true){
+        return {sucess: "El boleta ha sido comprado"}
+      }
     }
 
     /**
@@ -77,16 +80,21 @@ export class boletas extends connect {
    * @returns {Promise<Object>} Una promesa que resuelve a un objeto que contiene el resultado de la operación o un error si la eliminación falla.
    */
 
-    async eliminarReserva(idBoleto){
-      let res = await this.collection.deleteOne({
-        _id : idBoleto
-      })
-
-      if(res.acknowledged === true){
-        return {sucess: "La reserva se ha eliminado de forma correcta"}
-      }
+    async eliminarReserva(idBoleto) {
+        try {
+          let res = await this.collection.deleteOne({
+            _id: idBoleto
+          });
       
-    }
+          if (res.acknowledged === true) {
+            return { success: "La reserva se ha eliminado de forma correcta" };
+          } else {
+            return { error: "No se pudo eliminar la reserva" };
+          }
+        } catch (error) {
+          return { error: "Se produjo un error al intentar eliminar la reserva" };
+        }
+      }
 
 /**
    * **API para Verificar Disponibilidad de Asientos:** Permitir la consulta de la disponibilidad de asientos en una sala para una proyección específica.

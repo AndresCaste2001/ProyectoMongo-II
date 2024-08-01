@@ -21,43 +21,8 @@ Desarrollar una serie de APIs para la aplicación web de CineCampus utilizando M
    - **API para Listar Películas:** Permitir la consulta de todas las películas disponibles en el catálogo, con detalles como título, género, duración y horarios de proyección.
 
      ```javascript
-     db.funcion.aggregate(
-     [
-       {
-         $lookup: {
-           from: "pelicula",
-           localField: "id_pelicula",
-           foreignField: "_id",
-           as: "pelicula_info"
-         }
-       },
-       {
-         $unwind: "$pelicula_info"
-       },
-       {
-         $group: {
-           _id: "$id_pelicula",
-           fechaInicio: {
-             $first: "$fechaInicio"
-           },
-           fechaFin: {
-             $first: "$fechaFin"
-           },
-           nombrePelicula: {
-             $first: "$pelicula_info.nombre"
-           }
-         }
-       },
-       {
-         $project: {
-           _id: 0,
-           fechaInicio: 1,
-           fechaFin: 1,
-           nombrePelicula: 1
-         }
-       }
-     ]
-     )
+     let ejemplo = new peliculas()
+     console.log(await ejemplo.getAllMovies());
      ```
 
      
@@ -65,9 +30,8 @@ Desarrollar una serie de APIs para la aplicación web de CineCampus utilizando M
    - **API para Obtener Detalles de Película:** Permitir la consulta de información detallada sobre una película específica, incluyendo sinopsis.
 
 ```javascript
-db.pelicula.findOne(  
-{nombre: "Pulp Fiction"}
-)
+let ejemplo = new peliculas()
+console.log(await ejemplo.getOneMovie("66a9ce97bf588d10e961be56"));
 ```
 
 
@@ -79,15 +43,8 @@ db.pelicula.findOne(
    - **API para Comprar Boletos:** Permitir la compra de boletos para una película específica, incluyendo la selección de la fecha y la hora de la proyección.
 
    ```javascript
-   db.boleta.insertOne(
-     {
-   	"asiento": 2,
-   	"id_funcion": ObjectId("66a9f1e4bf588d10e961be60"),
-   	"id_cliente": ObjectId("66a9cf27bf588d10e961be5b"),
-   	"metodoPago": "efectivo",
-   	"fila": 'A'
-   }
-   )
+   let ejemplo = new boletas()
+   console.log(await ejemplo.comprarAsientos(2,"66a9f1e4bf588d10e961be61","66a9cf27bf588d10e961be5e","tarjeta","C"));
    ```
 
    - **API para Verificar Disponibilidad de Asientos:** Permitir la consulta de la disponibilidad de asientos en una sala para una proyección específica.
@@ -95,19 +52,8 @@ db.pelicula.findOne(
      
 
      ```javascript
-     [
-       {
-         "$group": {
-           "_id": "$id_funcion",
-           "asientos_y_filas": {
-             "$push": {
-               "asiento": "$asiento",
-               "fila": "$fila"
-             }
-           }
-         }
-       }
-     ]
+     let ejemplo = new boletas()
+     console.log(await ejemplo.verificarDisponibilidad());
      ```
 
      `
@@ -119,15 +65,8 @@ db.pelicula.findOne(
    
 
    ```javascript
-   db.boleta.insertOne(
-     {
-   	"asiento": 2,
-   	"id_funcion": ObjectId("66a9f1e4bf588d10e961be60"),
-   	"id_cliente": ObjectId("66a9cf27bf588d10e961be5b"),
-   	"metodoPago": "efectivo",
-   	"fila": 'A'
-   }
-   )
+   let ejemplo = new boletas()
+   console.log(await ejemplo.comprarAsientos(3,"66a9f1e4bf588d10e961be61","66a9cf27bf588d10e961be5e","tarjeta","D"));
    ```
 
    
@@ -135,9 +74,8 @@ db.pelicula.findOne(
    - \- ***\*API para Cancelar Reserva de Asientos:\**** Permitir la cancelación de una reserva de asiento ya realizada.
 
      ```javascript
-       let check = new boletas()
-       const idBoleto = new ObjectId("66a67d06e73d622e5f052331")
-       console.log(await check.validarReserva(idBoleto))
+     let ejemplo = new boletas()
+     console.log(await ejemplo.eliminarReserva("66ab9d31b5953c1ab79e542b"));
      ```
 
      
@@ -149,32 +87,8 @@ db.pelicula.findOne(
    - **API para Verificar Tarjeta VIP:** Permitir la verificación de la validez de una tarjeta VIP durante el proceso de compra.
 
      ```javascript
-      let vip = await this.collection.aggregate(
-                 [
-                     {
-                       $match: {
-                         status: "activo"
-                       }
-                     },
-                     {
-                       $lookup: {
-                         from: "cliente",
-                         localField: "id_cliente",
-                         foreignField: "_id",
-                         as: "cliente_info"
-                       }
-                     },
-                     {
-                       $unwind: "$cliente_info"
-                     },
-                     {
-                       $project: {
-                         _id: 0,
-                         cliente: "$cliente_info"
-                       }
-                     }
-                   ]
-             )
+     let ejemplo = new tarjeta()
+     console.log(await ejemplo.getVIPUsers());
      ```
 
      
@@ -182,24 +96,15 @@ db.pelicula.findOne(
 3. Roles Definidos:**Administrador:** Tiene permisos completos para gestionar el sistema, incluyendo la venta de boletos en el lugar físico. Los administradores no están involucrados en las compras en línea realizadas por los usuarios.**Usuario Estándar:** Puede comprar boletos en línea sin la intervención del administrador.**Usuario VIP:** Puede comprar boletos en línea con descuentos aplicables para titulares de tarjetas VIP.**API para Crear Usuario:**
 
    ```javascript
-   async createUser() {
-           let users  = await this.collection.insertOne(
-               {
-                   "tipoCategoria": "Normal",
-                   "nombre": "Camila",
-                   "apellido": "Uganda",
-                   "email": "Camila.arias@example.com",
-                   "telefono": 3051584368
-                 }
-           )
-           return users
-       }
+   let ejemplo = new cliente()
+   console.log(await ejemplo.createUser("Normal","Alejandra","Castellanos","aleja@gmail.com",54651685));
    ```
 
     Permitir la creación de nuevos usuarios en el sistema, asignando roles y privilegios específicos (usuario estándar, usuario VIP o administrador).**API para Obtener Detalles de Usuario:** 
 
    ```javascript
-   detailsUser("66a9cf27bf588d10e961be5c")
+   let ejemplo = new cliente()
+   console.log(await ejemplo.detailsUser("66a9cf27bf588d10e961be5c"));
    ```
 
    Permitir la consulta de información detallada sobre un usuario, incluyendo su rol y estado de tarjeta VIP.**API para Actualizar Rol de Usuario:** Permitir la actualización del rol de un usuario (por ejemplo, cambiar de usuario estándar a VIP, o viceversa).**API para Listar Usuarios:**.
