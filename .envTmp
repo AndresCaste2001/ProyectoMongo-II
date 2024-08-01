@@ -18,3 +18,10 @@ pass = ContrasenaCualquiera
 host = mongodb://
 cluster = roundhouse.proxy.rlwy.net
 dbName = ProyectoMongoII
+
+user = ClienteInternet
+port = 57379
+pass = ContrasenaCualquiera
+host = mongodb://
+cluster = roundhouse.proxy.rlwy.net
+dbName = ProyectoMongoII

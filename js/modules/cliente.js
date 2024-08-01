@@ -47,4 +47,31 @@ export class cliente extends connect {
         const user = await this.collection.findOne({_id : new ObjectId(Iduser)})
         return user;
     }
+
+    async crearUsuarioMongo(nick, pwd, categoria){
+
+        let rol = ""
+        if(categoria === "VIP"){
+            rol = "VIPuser"
+        }
+        if(categoria === "estandar"){ 
+            rol = "insertOnlyBoletaRole"
+        }
+        if(categoria === "administrador"){
+            rol = "adminRole"
+        }
+
+        pwd = pwd.toString()
+
+        const newUser = await this.db.command({
+            createUser: nick,
+            pwd: pwd, 
+            roles: [
+                { role: rol, db: this.getDbName}
+            ]
+        })
+
+        return {nick: nick,
+                pwd: pwd}
+    }
 }

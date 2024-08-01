@@ -4,5 +4,5 @@ import { peliculas } from "./js/modules/pelicula.js";
 import { boletas } from "./js/modules/boleta.js";
 import { tarjeta } from "./js/modules/tarjeta.js"
 import { cliente } from "./js/modules/cliente.js"
-
+import { funcion } from "./js/modules/funcion.js"
 
